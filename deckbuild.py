@@ -45,13 +45,13 @@ class Deck:
       shuffle_cards : returns none
       deal_one      : returns the dealt card (Card) and removes it from the Deck
   """
+  # Standard SUIT and RANKS 
+  SUITS = ('Hearts','Diamonds','Spades','Clubs')
+  RANKS = ('Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine',
+          'Ten', 'Jack', 'Queen', 'King', 'Ace')
+  
   def __init__(self):
     """For each suit and rank, create a card object"""
-    
-    # Standard SUIT and RANKS 
-    SUITS = ('Hearts','Diamonds','Spades','Clubs')
-    RANKS = ('Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine',
-            'Ten', 'Jack', 'Queen', 'King', 'Ace')
             
     self.cards = []
     for suit in SUITS:
@@ -68,17 +68,29 @@ class Deck:
 
 
 class Dtruco:
-  
+  """
+      Creates a deck, with methods to shuffle cards
+      and deal one card to the player
+      
+      Deck for playing Truco
+      
+      Methods:
+      --------
+      shuffle_cards : returns none
+      deal_one      : returns the dealt card (Card) and removes it from the Deck
+      restart_deck  : returns none
+  """
   def __init__(self):
     
-    SUITS = ('Espada','Basto','Copas','Oro')
+    SUITS = ('Espadas','Basto','Copas','Oro')
     RANKS = ('Uno', 'Dos', 'Tres', 'Cuatro', 'Cinco', 'Seis', 'Siete',
               'Diez', 'Once', 'Doce')
               
-    # Add all the cards in the Deck          
-    self.cards = []
-    for suit in SUITS:
-        for rank in RANKS:
-            self.cards.append(Card(suit,rank))
-    
-#TODO replace deal one method. Cards doesn't leave the deck
+    # Add all the cards to the Deck          
+    super().__init__(self)
+  
+  def restart_deck(self):
+    """ Restarts the deck with all the cards available for next round """
+    super().__init__(self)
+  
+  
