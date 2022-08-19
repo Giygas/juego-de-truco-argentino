@@ -182,8 +182,28 @@ class TrucoHand:
   
 def __init__(self):
   """ Initialises the hand with an empty set of cards and a value of 0 """
-  self.cards = [] 
-  self.value = 0
+  self.__cards = [] 
+  self.__puntos = 0
+
+def get_cards(self):
+  """ Returns the card list """
+  return self.__cards
+  
+def add_card(card):
+  """
+    Adds one card to the hand
+    
+    Arguments
+    ---------
+    card  : TrucoCard
+  """ 
+  self.get_cards().append(card)
+
+def get_puntos(self):
+  return self.__puntos
+  
+def set_puntos(self, n):
+  self.__puntos = 0
 
 def __str__(self, align=0):
   # TODO redo this, normally the player cannot see the opponent hand
@@ -216,26 +236,32 @@ def has_flor():
     -------
     boolean : True or False depending if the payer has flor
   """
-  if (self.cards[0].suit == self.cards[1].suit == self.cards[2].suit):
+  if (self.get.cards()[0].suit == self.get.cards()[1].suit == self.get.cards()[2].suit):
     return True
   else:
     return False
   
-def total_envido(self):
-  """ Method to see how much the player has in envido """
+def total_puntos(self):
+  """ Method to see how much the player has in envido or flor """
   pass
-  #TODO calculate the envido total
+  #TODO calculate the total points
   
   
-def add_card(self, card):
+def add_cards(self, deck):
   """
-    Add a card to the player hand
+    Add 3 cards to the player hand
     
     Arguments
     ---------
-    TrucoCard  : a card to add to the player hand
+    TrucoDeck  : the deck from which the cards are taken
   """
-  self.cards.append(card)
+  self.add_card(deck.deal_one())
+  self.add_card(deck.deal_one())
+  self.add_card(deck.deal_one())
+  
+  #TODO add the total envido to the envido attribute
+  
+  
   
 def clear_hand(self):
   """ Method for clearing the player hand """
