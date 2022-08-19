@@ -1,7 +1,7 @@
 import random
 
 
-# CARD CLASSES
+################# CARD CLASSES
 class Card:
   """
       Gaming card class.
@@ -18,6 +18,23 @@ class Card:
       """Method for printing the rank and suit"""
       return f'{self.rank} of {self.suit}'
   
+  def get_suit(self):
+    return self.suit
+  
+  def get_rank(self):
+    return self.rank
+    
+  def get_value(self):
+    return self.value
+  
+  def set_suit(self, suit):
+    self.suit = suit
+  
+  def set_rank(self, rank):
+    self.suit = suit
+    
+  def set_value(self, value):
+    self.suit = suit
 
 class Bjcard(Card):
   """
@@ -31,10 +48,10 @@ class Bjcard(Card):
   def __init__(self, suit, rank):
     """ Initializes the values corresponding to the Black Jack game """
     super().__init__(suit, rank)
-    self.value = VALUES[rank]
+    self.set_value(VALUES[rank])
     
 
-class CardTruco(Card):
+class TrucoCard(Card):
   """
     Gaming card class for Truco. The values are set for this game
     Inherits from class Card
@@ -88,13 +105,13 @@ class CardTruco(Card):
     super().__init__(suit, rank)
     # Take the value of the card from the VALUES constant
     value_index = rank + suit
-    self.value = VALUES[value_index]
+    self.set_value(VALUES[value_index])
 
   def ranksuit(self):
     """ Method for printing the rank and suit """
-    return f'{self.rank} de {self.suit}'
+    return f'{self.get_rank} de {self.get_suit}'
 
-## DECK CLASSES
+################# DECK CLASSES
 class Deck:
   """
       Creates a deck, with methods to shuffle cards
@@ -129,7 +146,7 @@ class Deck:
       return self.cards.pop()
 
 
-class DeckTruco:
+class TrucoDeck:
   """
       Creates a deck, with methods to shuffle cards
       and deal one card to the player
@@ -156,6 +173,73 @@ class DeckTruco:
     super().__init__(self)
   
     
-## HAND CLASSES
-# TODO Create the hand class
-# TODO Card values for Envido
+################# HAND CLASSES
+class TrucoHand:
+  """
+    A card hand class to play truco
+    #TODO better docs
+  """
+  
+def __init__(self):
+  """ Initialises the hand with an empty set of cards and a value of 0 """
+  self.cards = [] 
+  self.value = 0
+
+def __str__(self, align=0):
+  # TODO redo this, normally the player cannot see the opponent hand
+  """
+      Printing the cards in the hand and the total value
+      If it's the player it aligns to the left, and right for the super AI
+      
+      Arguments:
+                  0 (Default) : aligns the elements to the left
+                  1           : aligns the elements to the right
+
+  """
+  output = ""
+  if align == 0:
+      for card in self.cards:
+          output += card.ranksuit() + '\n'
+      # output += f'\tTotal Hand: {self.value}' #TODO maybe reuse this code for printing envido
+  else:
+      for card in self.cards:
+          output += f'{" ":>60}' + card.ranksuit() + '\n'
+      # output += f'{" ":>50} {self.value} :Total Hand' #TODO same thing for envido
+  return output
+
+def has_flor():
+  """
+    Method for knowing if the player has flor
+    Flor is when the player has 3 cards of the same suit
+    
+    Returns
+    -------
+    boolean : True or False depending if the payer has flor
+  """
+  if (self.cards[0].suit == self.cards[1].suit == self.cards[2].suit):
+    return True
+  else:
+    return False
+  
+def total_envido(self):
+  """ Method to see how much the player has in envido """
+  pass
+  #TODO calculate the envido total
+  
+  
+def add_card(self, card):
+  """
+    Add a card to the player hand
+    
+    Arguments
+    ---------
+    TrucoCard  : a card to add to the player hand
+  """
+  self.cards.append(card)
+  
+def clear_hand(self):
+  """ Method for clearing the player hand """
+  while self.cards:
+    self.cards.pop()
+  del self.cards
+  self.cards = []
