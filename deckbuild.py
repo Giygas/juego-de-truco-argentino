@@ -1,7 +1,7 @@
 import random
 
 
-################# CARD CLASSES
+################# CARD CLASSES #################
 class Card:
   """
       Gaming card class.
@@ -114,7 +114,7 @@ class TrucoCard(Card):
     """ Method for printing the rank and suit """
     return f'{self.get_rank} de {self.get_suit}'
 
-################# DECK CLASSES
+################# DECK CLASSES #################
 class Deck:
   """
       Creates a deck, with methods to shuffle cards
@@ -192,7 +192,7 @@ class TrucoDeck:
     super().__init__(self)
 
 
-################# HAND CLASSES
+################# HAND CLASSES #################
 class TrucoHand:
   """
     A card hand class to play truco
