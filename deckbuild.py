@@ -10,21 +10,24 @@ class Card:
       for the corresponding game
   """
   def __init__(self,suit, rank):
-        self.suit = suit
-        self.rank = rank
-        self.value = 0
+        self.__suit = suit
+        self.__rank = rank
+        self.__value = 0
 
   def ranksuit(self):
       """Method for printing the rank and suit"""
       return f'{self.rank} of {self.suit}'
   
-  def get_suit(self):
+  @property
+  def suit(self):
     return self.suit
   
-  def get_rank(self):
+  @property
+  def rank(self):
     return self.rank
-    
-  def get_value(self):
+  
+  @property  
+  def value(self):
     return self.value
   
   def set_suit(self, suit):
@@ -183,27 +186,31 @@ class TrucoHand:
 def __init__(self):
   """ Initialises the hand with an empty set of cards and a value of 0 """
   self.__cards = [] 
-  self.__puntos = 0
+  self.puntos(0)
 
-def get_cards(self):
+@property
+def cards(self):
   """ Returns the card list """
   return self.__cards
-  
-def add_card(card):
+
+
+def add_card(self, card):
   """
     Adds one card to the hand
     
     Arguments
     ---------
-    card  : TrucoCard
+    card  : TrucoCard, card to be added to the hand
   """ 
   self.get_cards().append(card)
 
-def get_puntos(self):
+@property
+def puntos(self):
   return self.__puntos
-  
-def set_puntos(self, n):
-  self.__puntos = 0
+
+@puntos.setter  
+def puntos(self, n):
+  self.__puntos = n
 
 def __str__(self, align=0):
   # TODO redo this, normally the player cannot see the opponent hand
@@ -227,7 +234,8 @@ def __str__(self, align=0):
       # output += f'{" ":>50} {self.value} :Total Hand' #TODO same thing for envido
   return output
 
-def has_flor():
+@property
+def has_flor(self):
   """
     Method for knowing if the player has flor
     Flor is when the player has 3 cards of the same suit
@@ -236,17 +244,49 @@ def has_flor():
     -------
     boolean : True or False depending if the payer has flor
   """
-  if (self.get.cards()[0].suit == self.get.cards()[1].suit == self.get.cards()[2].suit):
+  if (self.cards[0].suit() == \
+      self.cards[1].suit() == \
+      self.cards[2].suit()):
     return True
   else:
     return False
   
 def total_puntos(self):
-  """ Method to see how much the player has in envido or flor """
-  pass
-  #TODO calculate the total points
+  """ Method to calculate how much the player has in envido or flor """
+  equal_suits = []
+  # If the player has flor, add all 3 cards in the count
+  if self.has_flor:
+    equal_suits.append(self.cards[0])
+    equal_suits.append(self.cards[1])
+    equal_suits.append(self.cards[2])
+  elif self.cards[0].suit == self.cards[1].suit:
+    equal_suits.append(self.cards[0])
+    equal_suits.append(self.cards[1])
+  elif self.cards[0].suit == self.cards[2].suit:
+    equal_suits.append(self.cards[0])
+    equal_suits.append(self.cards[2])
+  elif self.cards[1].suit == self.cards[2].suit:
+    equal_suits.append(self.cards[1])
+    equal_suits.append(self.cards[2])
+    
+  # The ranks that have no value in envido or flor
+  zero_ranks = (10, 11, 12)
   
-  
+  tanto = 0
+  # If there are no cards of the same suit, pick the highest card
+  if not equal_suits:
+    for c in self.cards:
+      if c.rank not in zero_ranks:
+        highest = c.rank
+    self.puntos(tanto)
+  else:
+    tanto += 20
+    for c in equal_suits:
+      if c.rank not in zero_ranks:
+        tanto += c.rank
+    self.puntos(tanto)
+
+
 def add_cards(self, deck):
   """
     Add 3 cards to the player hand
