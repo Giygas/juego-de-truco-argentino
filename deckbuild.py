@@ -155,7 +155,8 @@ class Deck:
   # I don't know which one will be better and the end
   # I think that memory is more expensive that cpu power, so I'll go with 
   # readding the cards in the player hands and not redoing the whole deck
-  # every hand 
+  # every hand waiting for the garbage collector to eventually collect
+  # the extra deck used 
   def restart_deck(self):
     """ Restarts the deck with all the cards available for next round """
     self.__init__(self)
@@ -307,6 +308,7 @@ def calculate_puntos(self):
 def add_cards(self, deck):
   """
     Add 3 cards to the player hand
+    Calculates the total envido or flor points at the same time
     
     Arguments
     ---------
