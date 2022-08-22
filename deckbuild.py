@@ -126,6 +126,8 @@ class Deck:
       --------
       shuffle_cards : returns none
       deal_one      : returns the dealt card (Card) and removes it from the Deck
+      restart_deck  : returns none
+      add_card      : returns none
   """
   # Standard SUIT and RANKS 
   SUITS = ('Hearts','Diamonds','Spades','Clubs')
@@ -134,19 +136,38 @@ class Deck:
   
   def __init__(self):
     """For each suit and rank, create a card object"""
-            
     self.cards = []
     for suit in SUITS:
         for rank in RANKS:
-            self.cards.append(Card(suit,rank))
+            self.add_card(Card(suit,rank))
 
   def shuffle_cards(self):
-      """Imports random for shuffling the deck"""
-      random.shuffle(self.cards)
+    """Imports random for shuffling the deck"""
+    random.shuffle(self.cards)
 
   def deal_one(self):
-      """Deals one to the player and removes it from the deck"""
-      return self.cards.pop()
+    """Deals one to the player and removes it from the deck"""
+    return self.cards.pop()
+  
+  # Here I have the option of Restarting the full deck with this method,
+  # or add the cards used in the players hands with the add_card method in
+  # the parent class. I'm not very well versed in efficiency (yet) and 
+  # I don't know which one will be better and the end
+  # I think that memory is more expensive that cpu power, so I'll go with 
+  # readding the cards in the player hands and not redoing the whole deck
+  # every hand 
+  def restart_deck(self):
+    """ Restarts the deck with all the cards available for next round """
+    self.__init__(self)
+    
+  def add_card(self, card):
+    """
+      Add a card to the deck
+      Arguments
+      ---------
+      card  : the card(Card) to be added to the Deck
+    """
+    self.cards.append(card)
 
 
 class TrucoDeck:
@@ -160,7 +181,6 @@ class TrucoDeck:
       --------
       shuffle_cards : returns none
       deal_one      : returns the dealt card (Card) and removes it from the Deck
-      restart_deck  : returns none
   """
   def __init__(self):
     
@@ -170,12 +190,8 @@ class TrucoDeck:
               
     # Add all the cards to the Deck          
     super().__init__(self)
-  
-  def restart_deck(self):
-    """ Restarts the deck with all the cards available for next round """
-    super().__init__(self)
-  
-    
+
+
 ################# HAND CLASSES
 class TrucoHand:
   """
@@ -202,7 +218,7 @@ def add_card(self, card):
     ---------
     card  : TrucoCard, card to be added to the hand
   """ 
-  self.get_cards().append(card)
+  self.cards.append(card)
 
 @property
 def puntos(self):
@@ -302,9 +318,14 @@ def add_cards(self, deck):
   
   self.calculate_puntos()
   
-def clear_hand(self):
-  """ Method for clearing the player hand """
+def end_hand(self, deck):
+  """
+    Clears the player hand and adds the cards to the deck 
+    Arguments
+    ---------
+    deck  : the deck(TrucoDeck) to put the player cards in
+  """
   while self.cards:
-    self.cards.pop()
+    deck.add_card(self.cards.pop())
   del self.cards
   self.cards = []
