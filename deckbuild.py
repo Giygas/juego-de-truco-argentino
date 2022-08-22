@@ -251,7 +251,7 @@ def has_flor(self):
   else:
     return False
   
-def total_puntos(self):
+def calculate_puntos(self):
   """ Method to calculate how much the player has in envido or flor """
   equal_suits = []
   # If the player has flor, add all 3 cards in the count
@@ -277,7 +277,8 @@ def total_puntos(self):
   if not equal_suits:
     for c in self.cards:
       if c.rank not in zero_ranks:
-        highest = c.rank
+        if c.rank > highest:
+          highest = c.rank
     self.puntos(tanto)
   else:
     tanto += 20
@@ -299,9 +300,7 @@ def add_cards(self, deck):
   self.add_card(deck.deal_one())
   self.add_card(deck.deal_one())
   
-  #TODO add the total envido to the envido attribute
-  
-  
+  self.calculate_puntos()
   
 def clear_hand(self):
   """ Method for clearing the player hand """
