@@ -65,55 +65,66 @@ class TrucoCard(Card):
   """
   
   ## Create values for each combination of cards
-  VALUES = {}
-  VALUES['UnoEspadas']    = 1
-  VALUES['UnoBasto']      = 2
-  VALUES['SieteEspadas']  = 3
-  VALUES['SieteOro']      = 4
-  VALUES['TresEspadas']   = 5
-  VALUES['TresBasto']     = 5
-  VALUES['TresOro']       = 5
-  VALUES['TresCopas']     = 5
-  VALUES['DosEspada']     = 6
-  VALUES['DosBasto']      = 6
-  VALUES['DosOro']        = 6
-  VALUES['DosCopas']      = 6
-  VALUES['UnoOro']        = 7
-  VALUES['UnoCopas']      = 7
-  VALUES['DoceEspadas']   = 8
-  VALUES['DoceBasto']     = 8
-  VALUES['DoceOro']       = 8
-  VALUES['DoceCopas']     = 8
-  VALUES['OnceEspadas']   = 9
-  VALUES['OnceBasto']     = 9
-  VALUES['OnceOro']       = 9
-  VALUES['OnceCopas']     = 9
-  VALUES['DiezEspadas']   = 10
-  VALUES['DiezBasto']     = 10
-  VALUES['DiezOro']       = 10
-  VALUES['DiezCopas']     = 10
-  VALUES['SieteCopas']    = 11
-  VALUES['SieteBasto']    = 11
-  VALUES['SeisEspadas']   = 12
-  VALUES['SeisBasto']     = 12
-  VALUES['SeisOro']       = 12
-  VALUES['SeisCopas']     = 12
-  VALUES['CincoEspadas']  = 13
-  VALUES['CincoBasto']    = 13
-  VALUES['CincoOro']      = 13
-  VALUES['CincoCopas']    = 13
-  VALUES['CuatroEspadas'] = 14
-  VALUES['CuatroBasto']   = 14
-  VALUES['CuatroOro']     = 14
-  VALUES['CuatroCopas']   = 14
   
   def __init__(self, suit, rank):
     """ Initializes the values corresponding to the Truco game """
-    # super().__init__(suit, rank)
+    
+    VALUES = {}
+    VALUES['UnoEspadas']    = 1
+    VALUES['UnoBasto']      = 2
+    VALUES['SieteEspadas']  = 3
+    VALUES['SieteOro']      = 4
+    VALUES['TresEspadas']   = 5
+    VALUES['TresBasto']     = 5
+    VALUES['TresOro']       = 5
+    VALUES['TresCopas']     = 5
+    VALUES['DosEspadas']    = 6
+    VALUES['DosBasto']      = 6
+    VALUES['DosOro']        = 6
+    VALUES['DosCopas']      = 6
+    VALUES['UnoOro']        = 7
+    VALUES['UnoCopas']      = 7
+    VALUES['DoceEspadas']   = 8
+    VALUES['DoceBasto']     = 8
+    VALUES['DoceOro']       = 8
+    VALUES['DoceCopas']     = 8
+    VALUES['OnceEspadas']   = 9
+    VALUES['OnceBasto']     = 9
+    VALUES['OnceOro']       = 9
+    VALUES['OnceCopas']     = 9
+    VALUES['DiezEspadas']   = 10
+    VALUES['DiezBasto']     = 10
+    VALUES['DiezOro']       = 10
+    VALUES['DiezCopas']     = 10
+    VALUES['SieteCopas']    = 11
+    VALUES['SieteBasto']    = 11
+    VALUES['SeisEspadas']   = 12
+    VALUES['SeisBasto']     = 12
+    VALUES['SeisOro']       = 12
+    VALUES['SeisCopas']     = 12
+    VALUES['CincoEspadas']  = 13
+    VALUES['CincoBasto']    = 13
+    VALUES['CincoOro']      = 13
+    VALUES['CincoCopas']    = 13
+    VALUES['CuatroEspadas'] = 14
+    VALUES['CuatroBasto']   = 14
+    VALUES['CuatroOro']     = 14
+    VALUES['CuatroCopas']   = 14
+    
     # Take the value of the card from the VALUES constant
     value_index = str(rank) + str(suit)
-    self.value = VALUES[value_index]
-
+    self.__rank = rank
+    self.__suit = suit
+    self.__value = VALUES[value_index]
+  
+  @property
+  def rank(self):
+    return self.__rank
+    
+  @property
+  def suit(self):
+    return self.__suit
+    
   def ranksuit(self):
     """ Method for printing the rank and suit """
     return f'{self.rank} de {self.suit}'
@@ -138,11 +149,11 @@ class Deck:
   RANKS = ('Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine',
           'Ten', 'Jack', 'Queen', 'King', 'Ace')
   
-  def __init__(self, suits = SUITS, ranks = RANKS):
+  def __init__(self):
     """For each suit and rank, create a card object"""
     self.__cards = []
-    for suit in suits:
-        for rank in ranks:
+    for suit in SUITS:
+        for rank in RANKS:
             self.add_card(Card(suit,rank))
             
   @property
@@ -191,6 +202,8 @@ class TrucoDeck(Deck):
       shuffle_cards : returns none
       deal_one      : returns the dealt card (Card) and removes it from the Deck
   """
+            
+  # Add all the cards to the Deck
   def __init__(self):
     """For each suit and rank, create a card object with Truco values"""
     
@@ -198,8 +211,14 @@ class TrucoDeck(Deck):
     RANKS = ('Uno', 'Dos', 'Tres', 'Cuatro', 'Cinco', 'Seis', 'Siete',
               'Diez', 'Once', 'Doce')
               
-    # Add all the cards to the Deck
-    super().__init__(SUITS, RANKS)         
+    self.__cards = []
+    for suit in SUITS:
+        for rank in RANKS:
+            self.add_card(TrucoCard(suit,rank))
+  
+  @property
+  def cards(self):
+    return self.__cards   
     
 
 
@@ -344,4 +363,9 @@ def end_hand(self, deck):
   self.cards = []
 
 mazo = TrucoDeck()
-print(mazo.cards[0].suit)
+mazo.shuffle_cards()
+print(mazo.cards[0].ranksuit())
+print(mazo.cards[0].value)
+print(mazo.cards[1].ranksuit())
+print(mazo.cards[1].value)
+
