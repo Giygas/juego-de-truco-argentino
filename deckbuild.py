@@ -203,7 +203,7 @@ class TrucoHand:
 def __init__(self):
   """ Initialises the hand with an empty set of cards and a value of 0 """
   self.__cards = [] 
-  self.puntos(0)
+  self.__puntos = 0
 
 @property
 def cards(self):
@@ -292,6 +292,7 @@ def calculate_puntos(self):
   tanto = 0
   # If there are no cards of the same suit, pick the highest card
   if not equal_suits:
+    highest = 0
     for c in self.cards:
       if c.rank not in zero_ranks:
         if c.rank > highest:
@@ -331,3 +332,5 @@ def end_hand(self, deck):
     deck.add_card(self.cards.pop())
   del self.cards
   self.cards = []
+  
+mano = TrucoHand()
