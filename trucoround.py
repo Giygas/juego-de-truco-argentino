@@ -61,7 +61,7 @@ class Round:
   
   def end_ronda(self):
     #TODO calculate who has won here
-    
+    pass
     
   
   #TODO calculate draw
@@ -71,5 +71,5 @@ class Round:
   #If all 3 rounds are draw, wins whoever is mano
   #TODO add the winning points to the team
   def parda(self):
-    if 
+    pass
   #TODO do the game flow

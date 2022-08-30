@@ -3,6 +3,7 @@ import random
 
 ################# CARD CLASSES #################
 class Card:
+  #TODO refactor this
   """
       Gaming card class.
       Initialises the class with all the possibles combinations of suit
@@ -20,24 +21,27 @@ class Card:
   
   @property
   def suit(self):
-    return self.suit
+    return self.__suit
   
   @property
   def rank(self):
-    return self.rank
+    return self.__rank
   
   @property  
   def value(self):
-    return self.value
+    return self.__value
   
-  def set_suit(self, suit):
-    self.suit = suit
+  @suit.setter
+  def suit(self, suit):
+    self.__suit = suit
   
-  def set_rank(self, rank):
-    self.suit = suit
-    
-  def set_value(self, value):
-    self.suit = suit
+  @rank.setter
+  def rank(self, rank):
+    self.__rank = rank
+  
+  @value.setter
+  def value(self, value):
+    self.__value = value
 
 class Bjcard(Card):
   """
@@ -105,14 +109,14 @@ class TrucoCard(Card):
   
   def __init__(self, suit, rank):
     """ Initializes the values corresponding to the Truco game """
-    super().__init__(suit, rank)
+    # super().__init__(suit, rank)
     # Take the value of the card from the VALUES constant
-    value_index = rank + suit
-    self.set_value(VALUES[value_index])
+    value_index = str(rank) + str(suit)
+    self.value = VALUES[value_index]
 
   def ranksuit(self):
     """ Method for printing the rank and suit """
-    return f'{self.get_rank} de {self.get_suit}'
+    return f'{self.rank} de {self.suit}'
 
 ################# DECK CLASSES #################
 class Deck:
@@ -134,12 +138,16 @@ class Deck:
   RANKS = ('Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine',
           'Ten', 'Jack', 'Queen', 'King', 'Ace')
   
-  def __init__(self):
+  def __init__(self, suits = SUITS, ranks = RANKS):
     """For each suit and rank, create a card object"""
-    self.cards = []
-    for suit in SUITS:
-        for rank in RANKS:
+    self.__cards = []
+    for suit in suits:
+        for rank in ranks:
             self.add_card(Card(suit,rank))
+            
+  @property
+  def cards(self):
+    return self.__cards
 
   def shuffle_cards(self):
     """Imports random for shuffling the deck"""
@@ -171,7 +179,7 @@ class Deck:
     self.cards.append(card)
 
 
-class TrucoDeck:
+class TrucoDeck(Deck):
   """
       Creates a deck, with methods to shuffle cards
       and deal one card to the player
@@ -184,13 +192,15 @@ class TrucoDeck:
       deal_one      : returns the dealt card (Card) and removes it from the Deck
   """
   def __init__(self):
+    """For each suit and rank, create a card object with Truco values"""
     
     SUITS = ('Espadas','Basto','Copas','Oro')
     RANKS = ('Uno', 'Dos', 'Tres', 'Cuatro', 'Cinco', 'Seis', 'Siete',
               'Diez', 'Once', 'Doce')
               
-    # Add all the cards to the Deck          
-    super().__init__(self)
+    # Add all the cards to the Deck
+    super().__init__(SUITS, RANKS)         
+    
 
 
 ################# HAND CLASSES #################
@@ -332,5 +342,6 @@ def end_hand(self, deck):
     deck.add_card(self.cards.pop())
   del self.cards
   self.cards = []
-  
-mano = TrucoHand()
+
+mazo = TrucoDeck()
+print(mazo.cards[0].suit)

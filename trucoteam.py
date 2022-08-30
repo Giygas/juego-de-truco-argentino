@@ -11,7 +11,7 @@ class TrucoTeam:
     
   @total_puntos.setter
   def total_puntos(self, amt):
-    self.__total_puntos =+ amt
+    self.__total_puntos += amt
   
   @property
   def players(self):
@@ -25,3 +25,12 @@ class TrucoTeam:
   def team(self):
     return self.__team
   
+tt = TrucoTeam(1)
+
+print(tt.total_puntos)
+print(len(tt.players))
+print(tt.team)
+
+tt.total_puntos = 15
+
+print(tt.total_puntos)
