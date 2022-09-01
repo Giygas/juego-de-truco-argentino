@@ -3,7 +3,6 @@ import random
 
 ################# CARD CLASSES #################
 class Card:
-  #TODO refactor this
   """
       Gaming card class.
       Initialises the class with all the possibles combinations of suit
@@ -326,7 +325,6 @@ class TrucoHand:
     zero_ranks = (10, 11, 12)
     
     tanto = 0
-    #TODO make ranks Letters to numbers
     # If there are no cards of the same suit, pick the highest card
     if not equal_suits:
       highest = 0

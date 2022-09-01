@@ -1,4 +1,4 @@
-from deckbuild import *
+from deckbuild import TrucoHand
 class TrucoPlayer:
   #TODO Player documentation
   def __init__(self, name):
