@@ -5,13 +5,12 @@ class Round:
   #TODO track truco, retruco and vale cuatro
   #TODO documentation
   # A round consists of players, and how many rounds they have won
-  # Make primera, segunda y tercera
-  # Not possible to say Truco to a 4 in tercera
+  # Mano is by team
+  # Not possible to say Truco, Retruco or Vale 4 to a 4 in tercera
   # Players must be initialized before the round
-  # Make teams of players (Maybe a second version)
   def __init__(self, teams, deck):
     self.__teams = teams
-    self.__mano = None
+    self.__ft_mano = True
     self.__primera = None
     self.__segunda = None
     self.__tercera = None
@@ -58,10 +57,29 @@ class Round:
   def puntos(self, p):
     self.__puntos = p
     
+  @property
+  def ft_mano(self):
+    return self.__ft_mano
   
+  @ft_mano.setter
+  def ft_mano(self, bo):
+    self.__ft_mano = bo
+  
+  #Inverses the value of first team mano (So the second team will be mano ) 
+  def change_mano(self):
+    self.ft_mano(not self.ft_mano)
+    
   def end_ronda(self):
     #TODO calculate who has won here
     pass
+    
+  def truco(self):
+    if self.puntos == 1:
+      self.puntos(2)
+    else:
+      self.end_ronda()
+  
+    
     
   
   #TODO calculate draw

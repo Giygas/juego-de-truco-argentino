@@ -1,7 +1,8 @@
+from deckbuild import *
 class TrucoPlayer:
   #TODO Player documentation
   def __init__(self, name):
-    self.__name 
+    self.__name = name
     self.__hand = TrucoHand()
   
   @property
@@ -20,6 +21,7 @@ class TrucoPlayer:
   def hand(self, hand):
     self.__hand = hand    
   
-  
   def __str__(self):
     return 'Player: \t' + self.name
+    
+  

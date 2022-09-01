@@ -7,13 +7,13 @@ class Card:
   """
       Gaming card class.
       Initialises the class with all the possibles combinations of suit
-      and rank, and assigns a value of 0 to each card, needs to be inherited 
-      for the corresponding game
+      and rank, and a card value for the game
   """
-  def __init__(self,suit, rank):
+  #TODO Card docs with arguments
+  def __init__(self, suit, rank, value):
         self.__suit = suit
         self.__rank = rank
-        self.__value = 0
+        self.__value = value
 
   def ranksuit(self):
       """Method for printing the rank and suit"""
@@ -66,69 +66,33 @@ class TrucoCard(Card):
   
   ## Create values for each combination of cards
   
-  def __init__(self, suit, rank):
+  def __init__(self, suit, rank, value):
     """ Initializes the values corresponding to the Truco game """
-    
-    VALUES = {}
-    VALUES['UnoEspadas']    = 1
-    VALUES['UnoBasto']      = 2
-    VALUES['SieteEspadas']  = 3
-    VALUES['SieteOro']      = 4
-    VALUES['TresEspadas']   = 5
-    VALUES['TresBasto']     = 5
-    VALUES['TresOro']       = 5
-    VALUES['TresCopas']     = 5
-    VALUES['DosEspadas']    = 6
-    VALUES['DosBasto']      = 6
-    VALUES['DosOro']        = 6
-    VALUES['DosCopas']      = 6
-    VALUES['UnoOro']        = 7
-    VALUES['UnoCopas']      = 7
-    VALUES['DoceEspadas']   = 8
-    VALUES['DoceBasto']     = 8
-    VALUES['DoceOro']       = 8
-    VALUES['DoceCopas']     = 8
-    VALUES['OnceEspadas']   = 9
-    VALUES['OnceBasto']     = 9
-    VALUES['OnceOro']       = 9
-    VALUES['OnceCopas']     = 9
-    VALUES['DiezEspadas']   = 10
-    VALUES['DiezBasto']     = 10
-    VALUES['DiezOro']       = 10
-    VALUES['DiezCopas']     = 10
-    VALUES['SieteCopas']    = 11
-    VALUES['SieteBasto']    = 11
-    VALUES['SeisEspadas']   = 12
-    VALUES['SeisBasto']     = 12
-    VALUES['SeisOro']       = 12
-    VALUES['SeisCopas']     = 12
-    VALUES['CincoEspadas']  = 13
-    VALUES['CincoBasto']    = 13
-    VALUES['CincoOro']      = 13
-    VALUES['CincoCopas']    = 13
-    VALUES['CuatroEspadas'] = 14
-    VALUES['CuatroBasto']   = 14
-    VALUES['CuatroOro']     = 14
-    VALUES['CuatroCopas']   = 14
-    
-    # Take the value of the card from the VALUES constant
-    value_index = str(rank) + str(suit)
-    self.__rank = rank
-    self.__suit = suit
-    self.__value = VALUES[value_index]
+    #TODO TrucoCard docs
+    super().__init__(suit, rank, value)
+  
+  ##Redefine the ranksuit method to be in spanish  
+  def ranksuit(self):
+    """ Method for printing the rank and suit in spanish"""
+    return f'{self.rank} de {self.suit}'
   
   @property
-  def rank(self):
-    return self.__rank
+  def n_rank(self):
+    """
+      Method for returning an integer with the numerical value of the rank
+      
+      Returns
+      -------
+        int : the numerical value of the rank
+    """
     
-  @property
-  def suit(self):
-    return self.__suit
+    # All ranks to numbers
+    ranks_numbers = ['', 'Uno', 'Dos', 'Tres', 'Cuatro', 'Cinco', 'Seis', 'Siete'
+                    , '', '', 'Diez', 'Once', 'Doce']
+    num_value = ranks_numbers.index(self.rank)
+    return num_value
     
-  def ranksuit(self):
-    """ Method for printing the rank and suit """
-    return f'{self.rank} de {self.suit}'
-
+    
 ################# DECK CLASSES #################
 class Deck:
   """
@@ -210,16 +174,60 @@ class TrucoDeck(Deck):
     SUITS = ('Espadas','Basto','Copas','Oro')
     RANKS = ('Uno', 'Dos', 'Tres', 'Cuatro', 'Cinco', 'Seis', 'Siete',
               'Diez', 'Once', 'Doce')
-              
+    VALUES = {}
+    VALUES['UnoEspadas']    = 1
+    VALUES['UnoBasto']      = 2
+    VALUES['SieteEspadas']  = 3
+    VALUES['SieteOro']      = 4
+    VALUES['TresEspadas']   = 5
+    VALUES['TresBasto']     = 5
+    VALUES['TresOro']       = 5
+    VALUES['TresCopas']     = 5
+    VALUES['DosEspadas']    = 6
+    VALUES['DosBasto']      = 6
+    VALUES['DosOro']        = 6
+    VALUES['DosCopas']      = 6
+    VALUES['UnoOro']        = 7
+    VALUES['UnoCopas']      = 7
+    VALUES['DoceEspadas']   = 8
+    VALUES['DoceBasto']     = 8
+    VALUES['DoceOro']       = 8
+    VALUES['DoceCopas']     = 8
+    VALUES['OnceEspadas']   = 9
+    VALUES['OnceBasto']     = 9
+    VALUES['OnceOro']       = 9
+    VALUES['OnceCopas']     = 9
+    VALUES['DiezEspadas']   = 10
+    VALUES['DiezBasto']     = 10
+    VALUES['DiezOro']       = 10
+    VALUES['DiezCopas']     = 10
+    VALUES['SieteCopas']    = 11
+    VALUES['SieteBasto']    = 11
+    VALUES['SeisEspadas']   = 12
+    VALUES['SeisBasto']     = 12
+    VALUES['SeisOro']       = 12
+    VALUES['SeisCopas']     = 12
+    VALUES['CincoEspadas']  = 13
+    VALUES['CincoBasto']    = 13
+    VALUES['CincoOro']      = 13
+    VALUES['CincoCopas']    = 13
+    VALUES['CuatroEspadas'] = 14
+    VALUES['CuatroBasto']   = 14
+    VALUES['CuatroOro']     = 14
+    VALUES['CuatroCopas']   = 14          
+    
+    # Take the value of the card from the VALUES constant
+    
     self.__cards = []
     for suit in SUITS:
         for rank in RANKS:
-            self.add_card(TrucoCard(suit,rank))
+          value_index = str(rank) + str(suit)
+          self.add_card(TrucoCard(suit, rank, VALUES[value_index]))
   
   @property
   def cards(self):
     return self.__cards   
-    
+
 
 
 ################# HAND CLASSES #################
@@ -229,143 +237,136 @@ class TrucoHand:
     #TODO better docs
   """
   
-def __init__(self):
-  """ Initialises the hand with an empty set of cards and a value of 0 """
-  self.__cards = [] 
-  self.__puntos = 0
+  def __init__(self):
+    """ Initialises the hand with an empty set of cards and a value of 0 """
+    self.__cards = [] 
+    self.__puntos = 0
 
-@property
-def cards(self):
-  """ Returns the card list """
-  return self.__cards
+  @property
+  def cards(self):
+    """ Returns the card list """
+    return self.__cards
 
-
-def add_card(self, card):
-  """
-    Adds one card to the hand
-    
-    Arguments
-    ---------
-    card  : TrucoCard, card to be added to the hand
-  """ 
-  self.cards.append(card)
-
-@property
-def puntos(self):
-  return self.__puntos
-
-@puntos.setter  
-def puntos(self, n):
-  self.__puntos = n
-
-def __str__(self, align=0):
-  # TODO redo this, normally the player cannot see the opponent hand
-  """
-      Printing the cards in the hand and the total value
-      If it's the player it aligns to the left, and right for the super AI
+  def add_card(self, card):
+    """
+      Adds one card to the hand
       
-      Arguments:
-                  0 (Default) : aligns the elements to the left
-                  1           : aligns the elements to the right
+      Arguments
+      ---------
+      card  : TrucoCard, card to be added to the hand
+    """ 
+    self.cards.append(card)
 
-  """
-  output = ""
-  if align == 0:
-      for card in self.cards:
-          output += card.ranksuit() + '\n'
-      # output += f'\tTotal Hand: {self.value}' #TODO maybe reuse this code for printing envido
-  else:
-      for card in self.cards:
-          output += f'{" ":>60}' + card.ranksuit() + '\n'
-      # output += f'{" ":>50} {self.value} :Total Hand' #TODO same thing for envido
-  return output
+  @property
+  def puntos(self):
+    return self.__puntos
 
-@property
-def has_flor(self):
-  """
-    Method for knowing if the player has flor
-    Flor is when the player has 3 cards of the same suit
+  @puntos.setter  
+  def puntos(self, n):
+    self.__puntos = n
+
+  def __str__(self, align=0):
+    # TODO redo this, normally the player cannot see the opponent hand
+    """
+        Printing the cards in the hand and the total value
+        If it's the player it aligns to the left, and right for the super AI
+        
+        Arguments:
+                    0 (Default) : aligns the elements to the left
+                    1           : aligns the elements to the right
+
+    """
+    output = ""
+    if align == 0:
+        for card in self.cards:
+            output += card.ranksuit() + '\n'
+        # output += f'\tTotal Hand: {self.value}' #TODO maybe reuse this code for printing envido
+    else:
+        for card in self.cards:
+            output += f'{" ":>60}' + card.ranksuit() + '\n'
+        # output += f'{" ":>50} {self.value} :Total Hand' #TODO same thing for envido
+    return output
+
+  @property
+  def has_flor(self):
+    """
+      Method for knowing if the player has flor
+      Flor is when the player has 3 cards of the same suit
+      
+      Returns
+      -------
+      boolean : True or False depending if the payer has flor
+    """
+    if (self.cards[0].suit == \
+        self.cards[1].suit == \
+        self.cards[2].suit):
+      return True
+    else:
+      return False
     
-    Returns
-    -------
-    boolean : True or False depending if the payer has flor
-  """
-  if (self.cards[0].suit() == \
-      self.cards[1].suit() == \
-      self.cards[2].suit()):
-    return True
-  else:
-    return False
-  
-def calculate_puntos(self):
-  """ Method to calculate how much the player has in envido or flor """
-  equal_suits = []
-  # If the player has flor, add all 3 cards in the count
-  if self.has_flor:
-    equal_suits.append(self.cards[0])
-    equal_suits.append(self.cards[1])
-    equal_suits.append(self.cards[2])
-  elif self.cards[0].suit == self.cards[1].suit:
-    equal_suits.append(self.cards[0])
-    equal_suits.append(self.cards[1])
-  elif self.cards[0].suit == self.cards[2].suit:
-    equal_suits.append(self.cards[0])
-    equal_suits.append(self.cards[2])
-  elif self.cards[1].suit == self.cards[2].suit:
-    equal_suits.append(self.cards[1])
-    equal_suits.append(self.cards[2])
+  def calculate_puntos(self):
+    """ Method to calculate how much the player has in envido or flor """
+    equal_suits = []
+    # If the player has flor, add all 3 cards in the count
+    if self.has_flor:
+      equal_suits.append(self.cards[0])
+      equal_suits.append(self.cards[1])
+      equal_suits.append(self.cards[2])
+    elif self.cards[0].suit == self.cards[1].suit:
+      equal_suits.append(self.cards[0])
+      equal_suits.append(self.cards[1])
+    elif self.cards[0].suit == self.cards[2].suit:
+      equal_suits.append(self.cards[0])
+      equal_suits.append(self.cards[2])
+    elif self.cards[1].suit == self.cards[2].suit:
+      equal_suits.append(self.cards[1])
+      equal_suits.append(self.cards[2])
     
-  # The ranks that have no value in envido or flor
-  zero_ranks = (10, 11, 12)
-  
-  tanto = 0
-  # If there are no cards of the same suit, pick the highest card
-  if not equal_suits:
-    highest = 0
-    for c in self.cards:
-      if c.rank not in zero_ranks:
-        if c.rank > highest:
-          highest = c.rank
-    self.puntos(tanto)
-  else:
-    tanto += 20
-    for c in equal_suits:
-      if c.rank not in zero_ranks:
-        tanto += c.rank
-    self.puntos(tanto)
-
-
-def add_cards(self, deck):
-  """
-    Add 3 cards to the player hand
-    Calculates the total envido or flor points at the same time
+    # The ranks that have no value in envido or flor
+    zero_ranks = (10, 11, 12)
     
-    Arguments
-    ---------
-    TrucoDeck  : the deck from which the cards are taken
-  """
-  self.add_card(deck.deal_one())
-  self.add_card(deck.deal_one())
-  self.add_card(deck.deal_one())
-  
-  self.calculate_puntos()
-  
-def end_hand(self, deck):
-  """
-    Clears the player hand and adds the cards to the deck 
-    Arguments
-    ---------
-    deck  : the deck(TrucoDeck) to put the player cards in
-  """
-  while self.cards:
-    deck.add_card(self.cards.pop())
-  del self.cards
-  self.cards = []
+    tanto = 0
+    #TODO make ranks Letters to numbers
+    # If there are no cards of the same suit, pick the highest card
+    if not equal_suits:
+      highest = 0
+      for c in self.cards:
+        if c.n_rank not in zero_ranks:
+          if c.n_rank > highest:
+            highest = c.n_rank
+      self.puntos = tanto
+    else:
+      tanto += 20
+      for c in equal_suits:
+        if c.n_rank not in zero_ranks:
+          tanto += c.n_rank
+      self.puntos = tanto
 
-mazo = TrucoDeck()
-mazo.shuffle_cards()
-print(mazo.cards[0].ranksuit())
-print(mazo.cards[0].value)
-print(mazo.cards[1].ranksuit())
-print(mazo.cards[1].value)
 
+  def add_cards(self, deck):
+    """
+      Add 3 cards to the player hand
+      Calculates the total envido or flor points at the same time
+      
+      Arguments
+      ---------
+      Deck  : the deck from which the cards are taken
+    """
+    self.add_card(deck.deal_one())
+    self.add_card(deck.deal_one())
+    self.add_card(deck.deal_one())
+    
+    self.calculate_puntos()
+    
+  def end_hand(self, deck):
+    """
+      Clears the player hand and adds the cards to the deck 
+      Arguments
+      ---------
+      deck  : the deck(TrucoDeck) to put the player cards in
+    """
+    while self.cards:
+      deck.add_card(self.cards.pop())
+    del self.cards
+    self.cards = []
+    self.puntos = 0
