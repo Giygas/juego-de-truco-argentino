@@ -253,7 +253,7 @@ class TrucoHand:
       
       Arguments
       ---------
-      card  : TrucoCard, card to be added to the hand
+      (Card)  : Card to be added to the hand
     """ 
     self.cards.append(card)
 
